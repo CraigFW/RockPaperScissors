@@ -33,7 +33,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-77g8HZSaVZaVTWIzXCWTvkDwuhjvuqAmqH35+j0Xr3w=",
+      "hash": "sha256-cL9YTwQ0DR0FnnqB9O0zMOOstJQCL6AIvXWbxXxLmFQ=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -93,7 +93,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.dll"
     },
     {
-      "hash": "sha256-nQLhzn7GIFsQeGBFBk\/JmyjJIcpgdBHD1e\/gHkHLY8o=",
+      "hash": "sha256-2JjjBn+GmhMXGKJwkhcLDN9VqIC3m3HkjoAbZxAr3kk=",
       "url": "_framework\/RockPaperScissors.dll"
     },
     {
@@ -129,7 +129,7 @@
       "url": "_framework\/System.Net.Primitives.dll"
     },
     {
-      "hash": "sha256-YdQDa7PbNwk2N3bKik0NhLFYYBd+2Z8KLmvyotw4l1M=",
+      "hash": "sha256-HWrEZsj+dSzNVc\/qo+K0Jkco7VRisKjfSZDBiDMQXtU=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
@@ -241,5 +241,5 @@
       "url": "scissors.jpg"
     }
   ],
-  "version": "PCauM7Zh"
+  "version": "2nzU9IvZ"
 };
