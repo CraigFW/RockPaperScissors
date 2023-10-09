@@ -1,0 +1,16 @@
+﻿<div @onclick="CardSelected" class="card">
+   <img src="@(CardType + ".jpg")" height="200px" width="150px" />
+</div>
+
+@code {
+    [Parameter]
+    public string CardType { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnCardSelected { get; set; }
+
+    private void CardSelected()
+    {
+        OnCardSelected.InvokeAsync(CardType);
+    }
+}

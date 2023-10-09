@@ -1,0 +1,147 @@
+﻿<div class="text-center">
+@if (currentRound.PlayerSelection == null)
+{
+    <div style="display:flex; place-content:center">
+        <Card OnCardSelected=RoundEnd CardType="Rock" />
+        <Card OnCardSelected=RoundEnd CardType="Paper"/>
+        <Card OnCardSelected=RoundEnd CardType="Scissors" />
+    </div>
+}
+@if(currentRound.PlayerSelection != null)
+{
+        <div style="display:flex; place-content:center">
+        <Card CardType="@currentRound.PlayerSelection" />
+        <Card CardType="@currentRound.ComputerSelection" />
+    </div>
+}
+
+<div>
+    <input type="checkbox" @bind-value=enableLevelTwo /> Enable Level 2
+</div>
+
+<div>
+    <h4>@message</h4>
+    <h4>Wins: @winCount</h4>
+</div>
+
+<div>
+    <button class="btn btn-primary" @onclick="ResetGame">Reset</button>
+</div>
+</div>
+@code {
+    private int winCount = 0;
+    private string message = "Select a choice";
+    private bool enableLevelTwo;
+    private GameRound currentRound = new();
+    List<GameRound> rounds = new();
+
+    private void RoundEnd(string playerSelected)
+    {
+        currentRound.PlayerSelection = playerSelected;
+        currentRound.ComputerSelection = GetComputerSelected();
+
+        currentRound.Winner = CalculateWinner(currentRound);
+
+        if(currentRound.Winner == 0)
+        {
+            message = "Tie";
+        }
+        else if(currentRound.Winner == 1)
+        {
+            message = "You Win";
+            winCount++;
+        }
+        else if(currentRound.Winner == 2)
+        {
+            message = "You Lose";
+            winCount = 0;
+        }
+
+        rounds.Add(currentRound);
+    }
+
+    private int CalculateWinner(GameRound gameRound)
+    {
+        string playerChoice = gameRound.PlayerSelection;
+        string compChoice = gameRound.ComputerSelection;
+
+        if (playerChoice == "Rock")
+        {
+            if (compChoice == "Rock")
+            {
+                return 0;
+            }
+            else if (compChoice == "Paper")
+            {
+                return 2;
+            }
+            else if (compChoice == "Scissors")
+            {
+                return 1;
+            }
+        }
+        else if (playerChoice == "Paper")
+        {
+            if (compChoice == "Rock")
+            {
+                return 1;
+            }
+            else if (compChoice == "Paper")
+            {
+                return 0;
+            }
+            else if (compChoice == "Scissors")
+            {
+                return 2;
+            }
+        }
+        else if (playerChoice == "Scissors")
+        {
+            if (compChoice == "Rock")
+            {
+                return 2;
+            }
+            else if (compChoice == "Paper")
+            {
+                return 1;
+            }
+            else if (compChoice == "Scissors")
+            {
+                return 0;
+            }
+        }
+
+        return 0;
+    }
+
+    private string GetComputerSelected()
+    {
+        if (enableLevelTwo)
+        {
+            if (rounds.Count() > 1)
+            {
+                return(rounds[rounds.Count - 1].PlayerSelection);
+            }
+        }
+        return RandomSelection();
+    }
+
+    private string RandomSelection(){
+        Random rnd = new Random();
+        int selected = rnd.Next(1, 4);
+        return selected == 1 ? "Rock" : selected == 2 ? "Paper" : "Scissors";
+    }
+
+    private void ResetGame()
+    {
+        currentRound = new();
+        message = "Select a choice";
+    }
+
+    public class GameRound
+    {
+        public string PlayerSelection { get; set; }
+        public string ComputerSelection { get; set; }
+        public int Winner { get; set; }
+    }
+}
