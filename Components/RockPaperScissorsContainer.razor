@@ -2,16 +2,16 @@
 @if (currentRound.PlayerSelection == null)
 {
     <div style="display:flex; place-content:center">
-        <Card OnCardSelected=RoundEnd CardType="Rock" />
-        <Card OnCardSelected=RoundEnd CardType="Paper"/>
-        <Card OnCardSelected=RoundEnd CardType="Scissors" />
+        <Card OnCardSelected=RoundEnd CardType="rock" />
+        <Card OnCardSelected=RoundEnd CardType="paper"/>
+        <Card OnCardSelected=RoundEnd CardType="scissors" />
     </div>
 }
 @if(currentRound.PlayerSelection != null)
 {
         <div style="display:flex; place-content:center">
-        <Card CardType="@currentRound.PlayerSelection" />
-        <Card CardType="@currentRound.ComputerSelection" />
+        <Card CardType="@currentRound.PlayerSelection.ToLower()" />
+            <Card CardType="@currentRound.ComputerSelection.ToLower()" />
     </div>
 }
 
