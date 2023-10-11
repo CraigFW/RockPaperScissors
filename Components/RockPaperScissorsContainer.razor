@@ -1,17 +1,17 @@
 ﻿<div class="text-center">
-@if (currentRound.PlayerSelection == null)
+@if (!roundEnded)
 {
     <div style="display:flex; place-content:center">
-        <Card OnCardSelected=RoundEnd CardType="rock" />
-        <Card OnCardSelected=RoundEnd CardType="paper"/>
-        <Card OnCardSelected=RoundEnd CardType="scissors" />
+            <Card OnCardSelected=RoundEnd CardType="CardChoice.Rock" />
+            <Card OnCardSelected=RoundEnd CardType="CardChoice.Paper" />
+            <Card OnCardSelected=RoundEnd CardType="CardChoice.Scissors" />
     </div>
 }
-@if(currentRound.PlayerSelection != null)
+@if (roundEnded)
 {
         <div style="display:flex; place-content:center">
-        <Card CardType="@currentRound.PlayerSelection.ToLower()" />
-            <Card CardType="@currentRound.ComputerSelection.ToLower()" />
+        <Card CardType="@currentRound.PlayerSelection" />
+            <Card CardType="@currentRound.ComputerSelection" />
     </div>
 }
 
@@ -32,11 +32,13 @@
     private int winCount = 0;
     private string message = "Select a choice";
     private bool enableLevelTwo;
+    private bool roundEnded;
     private GameRound currentRound = new();
     List<GameRound> rounds = new();
 
-    private void RoundEnd(string playerSelected)
+    private void RoundEnd(CardChoice playerSelected)
     {
+        roundEnded = true;
         currentRound.PlayerSelection = playerSelected;
         currentRound.ComputerSelection = GetComputerSelected();
 
@@ -62,50 +64,50 @@
 
     private int CalculateWinner(GameRound gameRound)
     {
-        string playerChoice = gameRound.PlayerSelection;
-        string compChoice = gameRound.ComputerSelection;
+        CardChoice playerChoice = gameRound.PlayerSelection;
+        CardChoice compChoice = gameRound.ComputerSelection;
 
-        if (playerChoice == "rock")
+        if (playerChoice == CardChoice.Rock)
         {
-            if (compChoice == "rock")
+            if (compChoice == CardChoice.Rock)
             {
                 return 0;
             }
-            else if (compChoice == "paper")
+            else if (compChoice == CardChoice.Paper)
             {
                 return 2;
             }
-            else if (compChoice == "scissors")
+            else if (compChoice == CardChoice.Scissors)
             {
                 return 1;
             }
         }
-        else if (playerChoice == "paper")
+        else if (playerChoice == CardChoice.Paper)
         {
-            if (compChoice == "rock")
+            if (compChoice == CardChoice.Rock)
             {
                 return 1;
             }
-            else if (compChoice == "paper")
+            else if (compChoice == CardChoice.Paper)
             {
                 return 0;
             }
-            else if (compChoice == "scissors")
+            else if (compChoice == CardChoice.Scissors)
             {
                 return 2;
             }
         }
-        else if (playerChoice == "scissors")
+        else if (playerChoice == CardChoice.Scissors)
         {
-            if (compChoice == "rock")
+            if (compChoice == CardChoice.Rock)
             {
                 return 2;
             }
-            else if (compChoice == "paper")
+            else if (compChoice == CardChoice.Paper)
             {
                 return 1;
             }
-            else if (compChoice == "scissors")
+            else if (compChoice == CardChoice.Scissors)
             {
                 return 0;
             }
@@ -114,7 +116,7 @@
         return 0;
     }
 
-    private string GetComputerSelected()
+    private CardChoice GetComputerSelected()
     {
         if (enableLevelTwo)
         {
@@ -126,22 +128,24 @@
         return RandomSelection();
     }
 
-    private string RandomSelection(){
+    private CardChoice RandomSelection()
+    {
         Random rnd = new Random();
         int selected = rnd.Next(1, 4);
-        return selected == 1 ? "rock" : selected == 2 ? "paper" : "scissors";
+        return selected == 1 ? CardChoice.Rock : selected == 2 ? CardChoice.Paper : CardChoice.Scissors;
     }
 
     private void ResetGame()
     {
+        roundEnded = false;
         currentRound = new();
         message = "Select a choice";
     }
 
     public class GameRound
     {
-        public string PlayerSelection { get; set; }
-        public string ComputerSelection { get; set; }
+        public CardChoice PlayerSelection { get; set; }
+        public CardChoice ComputerSelection { get; set; }
         public int Winner { get; set; }
     }
 }

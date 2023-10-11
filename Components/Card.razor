@@ -1,13 +1,21 @@
 ﻿<div @onclick="CardSelected" class="card">
-   <img src="@(CardType + ".jpg")" height="200px" width="150px" />
+    <img src="@(srcText + ".jpg")" height="200px" width="150px" />
 </div>
 
 @code {
     [Parameter]
-    public string CardType { get; set; }
+    public CardChoice CardType { get; set; }
 
     [Parameter]
-    public EventCallback<string> OnCardSelected { get; set; }
+    public EventCallback<CardChoice> OnCardSelected { get; set; }
+
+    public string srcText 
+    { 
+        get 
+        {
+            return (int)CardType == 0 ? "Rock" : (int)CardType == 1 ? "Paper" : "Scissors";
+        } 
+    }
 
     private void CardSelected()
     {
